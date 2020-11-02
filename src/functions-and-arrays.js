@@ -36,7 +36,20 @@ function findLongestWord(someArray) {
   }
 }
 
-console.log(findLongestWord(words));
+/*
+__________________
+Zé: 
+function FindLongestWord(list) {
+  let largestWord= list[0];
+  for (let item of list) {
+    if (item.length > largestWord.length) {
+      largestWord=item;
+    }
+  }
+  return largestWord;
+}
+____________________
+*/
 
 // Iteration #3: Calculate the sum
 
@@ -48,6 +61,19 @@ function sumNumbers(someArr) {
   }
   return calculate;
 }
+
+/*
+__________________
+Zé: 
+function sumNumbers (list) {
+  let accumulator = 0;
+  for (let item of list) {
+    accumulator+=item;
+  }
+  return accumulator;
+}
+____________________
+*/
 
 /*
 Bonus: Calculate the sum
@@ -77,7 +103,7 @@ function sum(anArray) {
     } else if (typeof anArray[i] == 'boolean') {
       sumUpBooleans = sumUpBooleans + anArray[i];
     } else {
-      throw new Error('Error'); //why is this not working?
+      throw new Error("Unsupported data type sir or ma'am"); //why is this not working?
     }
   }
   return sumUpNumbers + sumUpBooleans + sumUpStrings;
@@ -99,6 +125,13 @@ function averageNumbers(someAr) {
   average = calculate / someAr.length;
   return average;
 }
+
+/*
+__________________
+Zé: 
+see screenshot
+____________________
+*/
 
 // Level 2: Array of strings
 const wordsArr = [
@@ -127,26 +160,35 @@ function averageWordLength(someAr) {
   return average;
 }
 
+/*
+__________________
+Zé: 
+see screenshot
+____________________
+*/
+
 //Bonus: Calculate the average of a mixed elements array
-const mixedArr = ['seat', 6, 'linen', 'motif', 9.48];
+const mixedArr = ['seat', 6, 'linen', 'motif', 9.48, false];
 
 function avg(someAr) {
   if (someAr.length == 0) {
     return null;
   }
-  let calculateNumbers = 0;
-  let calculateLetters = 0;
-  let average = 0;
+  let avg = 0;
   for (let i = 0; i < someAr.length; i++) {
     if (typeof someAr[i] == 'number') {
-      calculateNumbers = calculateNumbers + someAr[i];
+      avg = avg + someAr[i];
+    } else if (typeof someAr[i] == 'boolean' && someAr[i]) {
+      avg = avg + 1;
     } else if (typeof someAr[i] == 'string') {
-      calculateLetters = calculateLetters + someAr[i].length;
+      avg = avg + someAr[i].length;
     }
   }
-  average = (calculateLetters + calculateNumbers) / someAr.length;
-  return average;
+  avg = avg / someAr.length;
+  return Number(avg.toFixed(2));
 }
+
+console.log(avg(mixedArr));
 /* I tested this function in codepen and repl.it and it DOES return the 
 average value. Why is Jasmine is saying that it does not return the 
 average? I tried "return average.toPrecision(3)" but it did not solve the 
@@ -176,6 +218,28 @@ const wordsUnique = [
   'bring'
 ];
 
+/*
+__________________
+Zé: Cloning a list:
+function uniquifyArray (list) {
+  const cloneOfList = [ ...list ];
+  return cloneOfList;
+}
+*/
+
+function uniquifyArray(lalalaArray) {
+  if (!lalalaArray.length) {
+    return null;
+  }
+  const newArray = [];
+  for (let element of lalalaArray) {
+    if (newArray.indexOf(element) === -1) {
+      newArray.push(element);
+    }
+  }
+  return newArray;
+}
+
 // Iteration #6: Find elements
 const wordsFind = [
   'machine',
@@ -198,6 +262,22 @@ function doesWordExist(yeayArray, word) {
   }
 }
 
+/*
+__________________
+Zé: 
+function doesWordExist (list, wordToFind) {
+
+  for (let item of list) {
+    if (item === wordToFind) {
+      return true;
+    }
+  }
+  return false;
+}
+
+____________________
+*/
+
 // Iteration #7: Count repetition
 const wordsCount = [
   'machine',
@@ -208,6 +288,7 @@ const wordsCount = [
   'matter',
   'eating',
   'matter',
+  'machine',
   'truth',
   'disobedience',
   'matter'
@@ -219,13 +300,28 @@ function howManyTimes(anotherArray, word) {
   }
   let sum = 0;
   for (let i = 0; i < anotherArray.length; i++) {
-    if (anotherArray.indexOf(word) !== -1) {
+    // anotherArray[i]
+    if (anotherArray[i].indexOf(word) !== -1) {
       sum = sum + 1;
     }
   }
   return sum;
 }
-/*the function above is not working, I still have to figure out why*/
+
+/*
+__________________
+Zé: 
+function howManyTimes (list, wordToFind) {
+  let accumulator=0;
+  for (let item of list) {
+    if (item === wordToFind) {
+      accumulator++;
+    }
+  }
+  return accumulator;
+}
+____________________
+*/
 
 // Iteration #8: Bonus
 
@@ -524,3 +620,70 @@ const matrix = [
   ],
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
+
+function greatestProduct(arr) {
+  let gp = 0;
+  let newgp = 0;
+
+  //SUM OF THE HORIZONTAL PRODUCTS
+
+  //iteration through the array-objects of the matrix
+  for (let j = 0; j < arr.length; j++) {
+    //iteration through the elements of each array that have at least 3 neighbours to the right
+    for (let i = 0; i < arr[j].length - 3; i++) {
+      newgp = arr[j][i] * arr[j][i + 1] * arr[j][i + 2] * arr[j][i + 3]; //Learning: I forgot the 'arr' in front!
+
+      //testing whether each product is bigger than the one before and if so - storing it in a variable
+      if (newgp > gp) {
+        gp = newgp;
+      }
+    }
+  }
+  for (let j = 0; j < arr.length - 3; j++) {
+    //iteration through the elements of each array that have at least 3 neighbours to the right
+    for (let i = 0; i < arr[j].length; i++) {
+      newgp = arr[j][i] * arr[j + 1][i] * arr[j + 2][i] * arr[j + 3][i];
+    }
+    if (newgp > gp) {
+      gp = newgp;
+    }
+  }
+  return gp;
+}
+
+//Iteration #8: Bonus 2
+
+function greatestProductOfDiagonals(hurray) {
+  let gp = 0;
+  let newgp = 0;
+
+  //diagonal upper left to lower right
+
+  for (let j = 0; j < hurray.length - 3; j++) {
+    for (let i = 0; i < hurray[j].length - 3; i++) {
+      newgp =
+        hurray[j][i] *
+        hurray[j + 1][i + 1] *
+        hurray[j + 2][i + 2] *
+        hurray[j + 3][i + 3];
+      if (newgp > gp) {
+        gp = newgp;
+      }
+    }
+  }
+
+  // diagonal upper right to lower left
+  for (let j = 0; j < hurray.length - 3; j++) {
+    for (let i = 0; i < hurray[j].length - 3; i++) {
+      newgp =
+        hurray[j][i] *
+        hurray[j + 1][i - 1] *
+        hurray[j + 2][i - 2] *
+        hurray[j + 3][i - 3];
+      if (newgp > gp) {
+        gp = newgp;
+      }
+    }
+  }
+  return gp;
+}
