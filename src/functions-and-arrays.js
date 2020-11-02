@@ -674,7 +674,7 @@ function greatestProductOfDiagonals(hurray) {
 
   // diagonal upper right to lower left
   for (let j = 0; j < hurray.length - 3; j++) {
-    for (let i = 0; i < hurray[j].length - 3; i++) {
+    for (let i = 3; i < hurray[j].length; i++) {
       newgp =
         hurray[j][i] *
         hurray[j + 1][i - 1] *
